@@ -1,23 +1,18 @@
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const express = require("express");
 const app = express();
 require('dotenv').config()
 const cors = require('cors')
 const port = process.env.PORT || 5000;
-app.use(cors());
+app.use(cors({
+  origin:["http://localhost:5173","https://b910-f0f4b.firebaseapp.com"]
+}));
 app.use(express.json());
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.guoefzb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
+const client = new MongoClient(uri);
 
 async function run() {
   try {
-    await client.connect();
     const database = client.db('b9a10');
     const collection = database.collection("craftlist");
     const categoryCollection = database.collection("category");
