@@ -43,12 +43,21 @@ async function run() {
         const result = await items.toArray();
         res.send(result);
     })
+    app.get("/filter/:useremail/:customize",async(req,res)=>{
+        const useremail = req.params.useremail;
+        const customize = req.params.customize;
+        const query = {$and: [{useremail:useremail},{customizeable:customize}]};
+        const items = collection.find(query);
+        const result = await items.toArray();
+        res.send(result);
+    })
     app.get("/details/:id",async(req,res)=>{
         const id = req.params.id;
         const query = {_id:new ObjectId(id)};
         const result = await collection.findOne(query);
         res.send(result);
-    })
+    });
+
     app.put("/update/:id",async(req,res)=>{
         const id = req.params.id;
         const filter = {_id:new ObjectId(id)};
