@@ -44,6 +44,7 @@ async function run() {
         res.send(result);
     })
     app.get("/filter/:useremail/:customize",async(req,res)=>{
+      // for test
         const useremail = req.params.useremail;
         const customize = req.params.customize;
         const query = {$and: [{useremail:useremail},{customizeable:customize}]};
